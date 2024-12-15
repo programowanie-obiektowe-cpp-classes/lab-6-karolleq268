@@ -8,12 +8,20 @@
 
 std::vector< char > foo(std::list< Human >& people)
 {
-    std::vector< char > retval(people.size());
+    auto lam = [](Human& person) { person.birthday(); };
+    for_each(people.begin(), people.end(), lam); 
 
-    std::for_each(people.begin(), people.end(), [&retval](Human& e) {
-        e.birthday();
-        retval.insert(retval.begin(), e.isMonster() ? 'n' : 'y');
-    });
+    auto lambda = [](Human& person) 
+    { 
+        char result = 'y';
+        if (person.isMonster()) 
+        {
+            result = 'n';
+        }
+        return result;
+    };
+
+    transform(people.rbegin(), people.rend(), retval.begin() ,lambda);
 
     return retval;
 }
