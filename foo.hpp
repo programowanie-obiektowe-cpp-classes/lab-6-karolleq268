@@ -8,6 +8,8 @@
 
 std::vector< char > foo(std::list< Human >& people)
 {
+    std::vector< char > retval(people.size());
+
     auto lam = [](Human& person) { person.birthday(); };
     for_each(people.begin(), people.end(), lam); 
 
@@ -20,7 +22,7 @@ std::vector< char > foo(std::list< Human >& people)
         }
         return result;
     };
-
+    
     transform(people.rbegin(), people.rend(), retval.begin() ,lambda);
 
     return retval;
